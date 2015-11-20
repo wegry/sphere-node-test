@@ -23,5 +23,5 @@ app.get('/product/:productID', function(req, res) {
 })
 
 const server = app.listen(port, () => {
-  console.log('Node app is running on port', app.get('port'));
+  console.log('Node app is running on port', port);
 })
