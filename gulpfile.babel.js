@@ -14,24 +14,28 @@ gulp.task('server-transpile', () => {
   .pipe(gulp.dest('dist'))
 })
 
-gulp.task('server-watch', ['transpile'], () => {
+gulp.task('server-watch', ['server-transpile'], () => {
   var server = gls.new('dist/server.js')
   server.start()      
   gulp.watch(['./server.js'], ['server-transpile'])
   gulp.watch('dist/server.js', () => server.start())
 })
 
+gulp.task('server', ['server-transpile'], () => {
+  var server = gls.new('dist/server.js')
+  server.start()  
+})
+
 gulp.task('client', () => {
-  return gulp.src('./app/details.js')
+  return gulp.src('./app/app.jsx')
     .pipe(webpack(webpackConfig))
     .pipe(gulp.dest('./public'))
 })
 
 gulp.task('client-watch', () => {
-    return gulp.src('./app/details.js')
-    .pipe(webpack(extend(webpackConfig, {
+    return webpack(extend(webpackConfig, {
       watch: true
-    })))
+    }))
     .pipe(gulp.dest('./public'))
 })
 
@@ -42,4 +46,6 @@ gulp.task('clean', () => {
     ])
 })
 
-gulp.task('default', ['client', 'server-transpile'])
+gulp.task('watch', ['client-watch', 'server-watch'])
+
+gulp.task('default', ['client', 'server'])

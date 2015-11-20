@@ -1,6 +1,6 @@
 module.exports = {
 
-  entry: __dirname + '/app/' + 'details.js',
+  entry: __dirname + '/app/' + 'app.jsx',
   devtool: 'source-map',
 
   module: {
