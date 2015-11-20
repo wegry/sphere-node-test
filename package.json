@@ -27,6 +27,6 @@
     "webpack-stream": "^2.1.1"
   },
   "devDependencies": {
-    "eslint": "^1.9.0",
+    "eslint": "^1.9.0"
   }
 }
