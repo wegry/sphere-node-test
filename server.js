@@ -3,10 +3,12 @@ import path from 'path'
 
 import {SphereClient} from 'sphere-node-sdk'
 
-const config = {
-  client_id: process.env.CLIENT_ID,
-  client_secret: process.env.CLIENT_SECRET,
-  project_key: process.env.PROJECT_KEY
+const opts = {
+  config: {
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
+    project_key: process.env.PROJECT_KEY
+  }
 };
 
 const client         = new SphereClient(),
