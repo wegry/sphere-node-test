@@ -3,3 +3,4 @@ dist
 *.min.js*
 npm-debug.log
 .env
+.idea
