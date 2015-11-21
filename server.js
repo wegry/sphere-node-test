@@ -17,6 +17,12 @@ const client         = new SphereClient(opts),
       port           = process.env.PORT || 5000,
       publicDir      = path.join(__dirname, '../public');
 
+function extractProducts (response) {
+  let products = response.body.results
+  console.log(products)
+  return products
+}
+
 app.get('/', function (req, res) {
   client.products.all().fetch()
       .then(results => console.log(results))
