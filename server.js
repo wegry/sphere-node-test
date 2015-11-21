@@ -12,24 +12,23 @@ const opts = {
 };
 
 const client         = new SphereClient(opts),
+      
       app            = express(),
-      htmlDir        = path.join(__dirname, '../public'),
-
-      port           = process.env.PORT || 5000;
-
+      port           = process.env.PORT || 5000,
+      publicDir      = path.join(__dirname, '../public');
 
 app.get('/', function (req, res) {
-  const products = client.products.all().fetch()
-  console.log(products)
-  res.sendFile(`${htmlDir}/index.html`)
+  client.products.all().fetch()
+      .then(results => console.log(results))
+  res.sendFile(`${publicDir}/index.html`)
 })
 
 app.get('/app.js', function (req, res) {
-  res.sendFile(`${htmlDir}/app.min.js`)
+  res.sendFile(`${publicDir}/app.min.js`)
 })
 
 app.get('/app.css', function (req, res) {
-  res.sendFile(`${htmlDir}/app.css`)
+  res.sendFile(`${publicDir}/app.css`)
 })
 
 app.get('/product/:productID', function(req, res) {
