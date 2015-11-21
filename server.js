@@ -11,17 +11,20 @@ const opts = {
   }
 };
 
-const client         = new SphereClient(opts),
-      productService = client.products(),
+const client         = new SphereClient(opts);
+      console.log(Object.getOwnPropertyNames(client))
+
+      // productService = client.products(),
 
       app            = express(),
       htmlDir        = path.join(__dirname, '../public'),
 
       port           = process.env.PORT || 5000;
 
+
 app.get('/', function (req, res) {
-  const products = productService.all().fetch()
-  console.log(products)
+  // const products = productService.all().fetch()
+  // console.log(products)
   res.sendFile(`${htmlDir}/index.html`)
 })
 
