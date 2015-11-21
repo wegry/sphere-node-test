@@ -15,14 +15,14 @@ gulp.task('server-transpile', () => {
 })
 
 gulp.task('server-watch', ['server-transpile'], () => {
-  var server = gls.new('dist/server.js')
+  var server = gls.new('./dist/server.js')
   server.start()      
   gulp.watch(['./server.js'], ['server-transpile'])
   gulp.watch('dist/server.js', () => server.start())
 })
 
 gulp.task('server', ['server-transpile'], () => {
-  var server = gls.new('dist/server.js')
+  var server = gls.new('./dist/server.js')
   server.start()  
 })
 

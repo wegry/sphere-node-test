@@ -11,7 +11,7 @@ const opts = {
   }
 };
 
-const client         = new SphereClient(),
+const client         = new SphereClient(opts),
       productService = client.products(),
 
       app            = express(),
