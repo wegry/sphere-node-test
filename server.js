@@ -1,12 +1,25 @@
 import express from 'express'
 import path from 'path'
 
-const app = express(),
-      htmlDir = path.join(__dirname, '../public');
+import {SphereClient} from 'sphere-node-sdk'
 
-const port = process.env.PORT || 5000;
+const config = {
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
+  project_key: process.env.PROJECT_KEY
+};
+
+const client         = new SphereClient(),
+      productService = client.products(),
+
+      app            = express(),
+      htmlDir        = path.join(__dirname, '../public'),
+
+      port           = process.env.PORT || 5000;
 
 app.get('/', function (req, res) {
+  const products = productService.all().fetch()
+  console.log(products)
   res.sendFile(`${htmlDir}/index.html`)
 })
 
