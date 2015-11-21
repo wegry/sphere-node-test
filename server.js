@@ -16,7 +16,7 @@ const client         = new SphereClient(opts);
 
       // productService = client.products(),
 
-      app            = express(),
+const app            = express(),
       htmlDir        = path.join(__dirname, '../public'),
 
       port           = process.env.PORT || 5000;
