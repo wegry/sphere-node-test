@@ -25,7 +25,7 @@ function extractProducts (response) {
 
 app.get('/', function (req, res) {
   client.products.all().fetch()
-      .then(results => console.log(results))
+      .then(extractProducts)
   res.sendFile(`${publicDir}/index.html`)
 })
 
