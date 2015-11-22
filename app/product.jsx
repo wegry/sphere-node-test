@@ -1,12 +1,13 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-const mountPoint = document.getElementById('app')
-
-const Product = React.createClass({
-  render: function() {
-    return <div>Hello {this.props.name}</div>;
+export default class Product extends React.Component {
+  render () {
+    const props = this.props
+    return (
+      <a href="/#details/77">
+        <img src={props.picture}></img>
+        <div>{props.name}</div>
+      </a>
+    )
   }
-});
-
-ReactDOM.render(<Product name="Top Kek" />, mountPoint);
+}

@@ -1,5 +1,6 @@
 import del from 'del'
 import gulp from 'gulp'
+import run from 'gulp-run'
 import babel from 'gulp-babel'
 import gls from 'gulp-live-server'
 
@@ -46,6 +47,11 @@ gulp.task('clean', () => {
     ])
 })
 
-gulp.task('watch', ['client-watch', 'server-watch'])
+gulp.task('test', () => {
+  run('npm test').exec()
+    .pipe(gulp.dest('output'))
+})
+
+gulp.task('dev', ['client-watch', 'server-watch'])
 
 gulp.task('default', ['client', 'server'])

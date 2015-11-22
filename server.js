@@ -1,3 +1,4 @@
+import {map, first} from 'underscore'
 import express from 'express'
 import path from 'path'
 
@@ -12,29 +13,41 @@ const opts = {
 };
 
 const client         = new SphereClient(opts),
-      
       app            = express(),
       port           = process.env.PORT || 5000,
       publicDir      = path.join(__dirname, '../public');
 
+
 function extractProducts (response) {
-  let products = response.body.results
-  console.log(products)
-  return products
+  const products = response.body.results,
+        theEssentials = map(products, product => {
+          const data = product.masterData.current 
+          return {
+            name: data.name.en,
+            description: data.description.en,
+            id: product.id,
+            image: first(data.masterVariant.images).url
+          }
+        })
+  return Promise.resolve(theEssentials)
 }
 
-app.get('/', function (req, res) {
-  client.products.all().fetch()
-      .then(extractProducts)
+app.get('/', (req, res) => {
   res.sendFile(`${publicDir}/index.html`)
 })
 
-app.get('/app.js', function (req, res) {
+app.get('/app.js', (req, res) => {
   res.sendFile(`${publicDir}/app.min.js`)
 })
 
-app.get('/app.css', function (req, res) {
+app.get('/app.css', (req, res) => {
   res.sendFile(`${publicDir}/app.css`)
+})
+
+app.get('/products', (req, res) => {
+  client.products.all().fetch()
+      .then(extractProducts)
+      .then(products => res.json(products))
 })
 
 app.get('/product/:productID', function(req, res) {
