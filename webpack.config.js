@@ -1,7 +1,15 @@
-module.exports = {
-
-  entry: __dirname + '/app/' + 'app.jsx',
+module.exports = [
+{
+  entry: {
+    browser: __dirname + '/app/' + 'browser.jsx'
+  },
+  target: 'web',
   devtool: 'source-map',
+
+  output: {
+    path: __dirname + '/public',
+    filename: '[name].js'
+  },
 
   module: {
     loaders: [
@@ -12,9 +20,5 @@ module.exports = {
     }
     ]
   },
-
-  output: {
-    path: __dirname + '/public',
-    filename: 'app.min.js'
-  }
 }
+]
