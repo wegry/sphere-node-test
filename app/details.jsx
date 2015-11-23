@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Details = React.createClass({
-  render: function() {
+class Details extends React.Component {
+  render () {
     return (
       <div>
         <div>Picture</div>
@@ -10,6 +10,6 @@ const Details = React.createClass({
       </div>
     )
   }
-})
+}
 
 export default Details

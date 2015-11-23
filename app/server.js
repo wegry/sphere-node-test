@@ -1,8 +1,12 @@
 import {map, first} from 'underscore'
+import Router from 'react-router'
+import ReactDOM from 'react-dom'
 import express from 'express'
 import path from 'path'
 
 import {SphereClient} from 'sphere-node-sdk'
+
+import routes from './routes.jsx'
 
 const opts = {
   config: {
@@ -10,12 +14,12 @@ const opts = {
     client_secret: process.env.CLIENT_SECRET,
     project_key: process.env.PROJECT_KEY
   }
-};
+}
 
 const client         = new SphereClient(opts),
       app            = express(),
       port           = process.env.PORT || 5000,
-      publicDir      = path.join(__dirname, '../public');
+      publicDir      = path.join(__dirname, '../public')
 
 
 function extractProducts (response) {
@@ -49,5 +53,5 @@ app.get('/product/:productID', function(req, res) {
 })
 
 const server = app.listen(port, () => {
-  console.log('Node app is running on port', port);
+  console.log('Node app is running on port', port)
 })

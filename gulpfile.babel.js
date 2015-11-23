@@ -1,4 +1,5 @@
 import del from 'del'
+
 import gulp from 'gulp'
 import run from 'gulp-run'
 import less from 'gulp-less'
@@ -31,6 +32,7 @@ gulp.task('server-transpile', () =>
 gulp.task('server-watch', ['server-transpile'], () => {
   var server = gls.new('./public/server.js')
   server.start()      
+
   gulp.watch(['./server.js'], ['server-transpile'])
   gulp.watch('./public/server.js', () => server.start())
 })
