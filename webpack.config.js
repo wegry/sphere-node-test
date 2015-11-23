@@ -8,6 +8,6 @@ module.exports = {
   },
 
   output: {
-    filename: '[app].min.js'
+    filename: 'app.min.js'
   }
 }

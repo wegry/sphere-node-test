@@ -32,16 +32,10 @@ function extractProducts (response) {
   return Promise.resolve(theEssentials)
 }
 
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
   res.sendFile(`${publicDir}/index.html`)
-})
-
-app.get('/app.js', (req, res) => {
-  res.sendFile(`${publicDir}/app.min.js`)
-})
-
-app.get('/app.css', (req, res) => {
-  res.sendFile(`${publicDir}/app.css`)
 })
 
 app.get('/products', (req, res) => {
