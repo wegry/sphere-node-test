@@ -44,7 +44,7 @@ class App extends React.Component {
 let history = createBrowserHistory()
 
 render(<Router history={history}>
-  <Route path="/" component={App} />
-  <Route path="details" component={Details} />
-  <Route path="*" component={NoMatch} />
+  <Route path='/' component={App} />
+  <Route path='/#details' component={Details} />
+  <Route path='*' component={NoMatch} />
   </Router>, document.getElementById('app'))
