@@ -1,8 +1,9 @@
 import React from 'react'
 import request from 'superagent'
-import {map, chain, extend} from 'underscore'
+import {map, chain, extend, first} from 'underscore'
 
 import Product from './product.jsx'
+import downscaleImage from './picture-wrangler'
 
 
 export default class Products extends React.Component {
@@ -18,28 +19,23 @@ export default class Products extends React.Component {
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (!err) {
-          let list = JSON.parse(res.text)
-          this.setState({list: list})
+          let list = JSON.parse(res.text),
+              downscaledList = map(list, product => {
+                let image = first(product.images),
+                    downscaledImage = downscaleImage(image)
+                return extend(product, {picture: downscaledImage})
+              })
+
+          this.setState({list: downscaledList})
         }
       })
   }
 
-  downscaleImage (product) {
-    let {image} = product,
-        downscaled = image.replace('.jpg', '-small.jpg')
-    return extend(product, {picture: downscaled}) 
-  }
-
-
   render () {
     const list = this.state.list;
-    const products = chain(list)
-      .map(this.downscaleImage)
-      .map(product => {
-        var { id } = product
-        return <Product { ...product } key={id} />
+    const products = list.map(product => {
+        return <Product { ...product } key={product.id} />
       })
-      .value()
-    return <div>{products}</div>
+    return <div className='product-grid'>{products}</div>
   }
 }

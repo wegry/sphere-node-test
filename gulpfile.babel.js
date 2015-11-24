@@ -9,7 +9,6 @@ import uglify from 'gulp-uglify'
 import gls from 'gulp-live-server'
 import minifyCSS from 'gulp-minify-css'
 
-import {extend} from 'underscore'
 import webpack from 'webpack-stream'
 import webpackConfig from './webpack.config.js'
 
@@ -19,47 +18,49 @@ gulp.task('default', ['client', 'server'])
 gulp.task('dev', ['client-watch', 'server-watch'])
 
 gulp.task('server', ['server-transpile'], () => {
-  var server = gls.new('./public/server.js')
+  var server = gls.new('public/server.js')
   server.start()  
 })
 
 gulp.task('server-transpile', () =>
-  gulp.src(['./server.js'])
+  gulp.src(['app/server.js'])
   .pipe(babel())
-  .pipe(gulp.dest('./public'))
+  .pipe(gulp.dest('public'))
 )
 
 gulp.task('server-watch', ['server-transpile'], () => {
-  var server = gls.new('./public/server.js')
+  var server = gls.new('public/server.js')
   server.start()      
 
-  gulp.watch(['./server.js'], ['server-transpile'])
-  gulp.watch('./public/server.js', () => server.start())
+  gulp.watch(['app/server.js'], ['server-transpile'])
+  gulp.watch('public/server.js', () => server.start())
 })
 
-gulp.task('client', ['less', 'markup'], () =>
-  gulp.src('./app/app.jsx')
-    .pipe(webpack(webpackConfig))
-    .pipe(uglify())
-    .pipe(gulp.dest('./public')))
+gulp.task('client', ['less', 'markup', 'client-pack'])
 
-gulp.task('client-watch', () =>
-    webpack(extend(webpackConfig, {
-      watch: true
-    }))
-      .pipe(gulp.dest('./public')))
+gulp.task('client-pack', () =>
+  gulp.src('app/app.jsx')
+    .pipe(webpack(webpackConfig))
+    // .pipe(uglify())
+    .pipe(gulp.dest('public')))
+
+gulp.task('client-watch', ['client'], () => {
+  gulp.watch('app/*.jsx', ['client-pack'])
+  gulp.watch('less/*.less', ['less'])
+  gulp.watch('html/*.html', ['markup'])
+})
 
 gulp.task('markup', () =>
-  gulp.src('./html/*.html')
-    .pipe(gulp.dest('./public'))
+  gulp.src('html/*.html')
+    .pipe(gulp.dest('public'))
 )
 
 gulp.task('less', () =>
-  gulp.src('./less/*.less')
+  gulp.src('less/*.less')
     .pipe(less())
     .pipe(minifyCSS())
     .pipe(rename(path => path.basename += '.min'))
-    .pipe(gulp.dest('./public')))
+    .pipe(gulp.dest('public')))
 
 gulp.task('clean', () =>
   del(['public']))

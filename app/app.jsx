@@ -1,36 +1,30 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, Link } from 'react-router'
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import { IndexRoute, Route, Router, Link } from 'react-router'
 
-export default class App extends React.Component {
+import Products from './products.jsx'
+import NoMatch from './no-match.jsx'
+import Details from './details.jsx'
+
+class App extends React.Component {
   render () {
     return (
-      <html>
-      <head>
-        <title>Test</title>
-        <link rel="stylesheet" type="text/css" href="/app.css" />
-      </head>
-      <body>
-        <div id="app">
             <div>
-              <Link to="/#sobroke">Is broken</Link>
               <h1>
-              Product Listing Demo
+              Demo
               </h1>
+              {this.props.children}
             </div>
-        </div>
-        <script src="/app.js"></script>
-      </body>
-      </html>
       )
   }
 }
 
-let history = createBrowserHistory()
-
-render(<Router history={history}>
-  <Route path='/' component={App} />
-  <Route path='/#details' component={Details} />
-  <Route path='*' component={NoMatch} />
-  </Router>, document.getElementById('app'))
+render((
+  <Router>
+    <Route path='/' component={App}>
+      <IndexRoute component={Products} />
+      <Route path='/details/:id' component={Details} />
+      <Route path='*' component={NoMatch} />
+    </Route>
+  </Router>
+  ), document.getElementById('app'))

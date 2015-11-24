@@ -6,7 +6,6 @@ module.exports = {
     }
     ]
   },
-
   output: {
     filename: 'app.min.js'
   }
